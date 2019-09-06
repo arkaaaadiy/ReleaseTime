@@ -7,6 +7,14 @@
       <ul class="right hide-on-med-and-down">
         <router-link 
         tag="li"
+        to="/"
+        exact
+        active-class="active"
+        >
+        <a href="#">Home</a>
+        </router-link> 
+        <router-link 
+        tag="li"
         to="/create"
         exact
         active-class="active"
@@ -42,6 +50,14 @@
   </nav>
 
   <ul class="sidenav" ref="sidenav" id="mobile-demo">
+      <router-link 
+        tag="li"
+        to="/"
+        exact
+        active-class="active"
+        >
+        <a href="#" class="sidenav-close">Home</a>
+        </router-link> 
       <router-link 
         tag="li"
         to="/create"

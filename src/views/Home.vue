@@ -1,17 +1,17 @@
 <template>
   <div>
-    <h1>Upcoming events</h1>
+    <h3>Upcoming events</h3>
 
     <hr />
 
-    <table v-if="events.length">
+    <table v-if="events.length" >
       <thead>
         <tr>
           <th>Title</th>
           <th>Category</th>
-          <th>Status</th>
           <th>Date</th>
           <th>Before the event</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -19,24 +19,35 @@
           <td>{{event.title}}</td>
           <td>
             {{event.category}}
-            <i
-              v-if="event.category == 'Movie'"
-              class="material-icons dp48"
-            >local_movies</i>
-            <i v-if="event.category == 'Serials'" class="material-icons dp48">ondemand_video</i>
-            <i v-if="event.category == 'Games'" class="material-icons dp48">videogame_asset</i>
+            
           </td>
-          <td>{{event.status}}</td>
           <td>{{new Date(event.date).toLocaleDateString()}}</td>
-          <td v-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) > 1">
-          {{ Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000))}} days</td>
-            <td v-else-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) == 1">1 day</td>
-            <td v-else-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) == 0"> today</td>             
-            <td v-else>Release took place {{new Date(event.date)}}</td>
+          
+          <td
+            v-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) > 1"
+          >{{ Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000))}} days</td>
+          <td
+            v-else-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) == 1"
+          >1 day</td>
+          <td
+            v-else-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) == 0"
+          >today</td>
+          <td v-else>Released</td>
+          <td><button class="waves-effect waves-teal btn-flat"><i class="material-icons">delete</i></button></td>
         </tr>
       </tbody>
     </table>
     <p v-else>no events have been added</p>
+
+    <div class="fixed-action-btn direction-top" id="add_btn">
+     
+     <router-link 
+      tag="a"
+      to="/create"
+      class="btn-floating waves-effect waves-light btn-large red"
+     ><i class="material-icons">add</i>
+     </router-link>
+     </div>
   </div>
 </template>
 
@@ -47,22 +58,24 @@ export default {
   name: "home",
   data: () => ({
     dl: 0,
-    today: +new Date(),
+    today: +new Date()
   }),
+  mounted() {
+   
+  },
   computed: {
     events() {
       return this.$store.getters.events;
     }
   },
 
-  methods: {        
-  }
+  methods: {}
 };
 </script>
 
 <style lang="scss" scoped>
-i {
-  position: absolute;
-  padding-left: 5px;
+#add_btn{
+  bottom: 45px;
+  right: 24px;
 }
 </style>

@@ -3,7 +3,7 @@
     <h3>Created event</h3>
     <form @submit.prevent="submitHandler">
       <div class="row">
-        <div class="input-field col s6">
+        <div class="input-field col l6 s12">
           <input id="title" type="text" v-model="title" class="validate" />
           <label for="title">Name the event you are waiting for</label>
         </div>
@@ -40,11 +40,9 @@
           <input id="date_event" type="text" ref="datepicker" class="datepicker" />
           <label for="date_event">Release date</label>
         </div>
-      </div>
-      <div class="row">
-        <div class="col s12">
+      </div>             
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col l6 s12">
               <textarea
                 id="description"
                 class="materialize-textarea"
@@ -58,9 +56,8 @@
                 style="float: right; font-size: 12px;"
               >{{description.length}}/250</span>
             </div>
-          </div>
-        </div>
-      </div>
+          </div>        
+      
       <button class="btn" type="submit">Create new event</button>
     </form>
   </div>
@@ -84,7 +81,7 @@ export default {
       const event = {
         title: this.title,
         description: this.description,
-        id: "",
+        id: this.title + Math.round(Math.random()*(1000-1)+1),
         status: "active",
         date: this.date.date,
         category: this.category
