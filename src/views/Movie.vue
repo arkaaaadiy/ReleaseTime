@@ -1,54 +1,59 @@
 <template>
   <div>
-    <h3>Upcoming events</h3>
-
+    <div class="row">
+        <h3 class="col s6">Upcoming events</h3>
+      <div  class="input-field col m6 s12">
+      <select ref="select" v-model="selected">
+        <option value=""  selected>All</option>
+        <option v-for="option in options" :key="option.id" :value="option.value">{{option.text}}</option>        
+      </select>
+        <label>Filter Select</label>
+      </div>
+    </div>
     <hr />
 
-    <table v-if="events.length" >
+    <table v-if="events">
       <thead>
         <tr>
           <th>Title</th>
           <th>Category</th>
           <th>Date</th>
           <th>Before the event</th>
-          <th></th>
+          <th>Delete</th>
         </tr>
       </thead>
-      <tbody>       
-        <tr v-for="(event, index) in events" :key="index" v-if="event.category == 'Movie'">
+      <tbody>
+        <tr v-for="(event, index) in events" :key="index">
           <td>{{event.title}}</td>
-          <td>
-            {{event.category}}
-            
-          </td>
+          <td>{{event.category}}</td>
           <td>{{new Date(event.date).toLocaleDateString()}}</td>
-          
           <td
-            v-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) > 1"
-          >{{ Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000))}} days</td>
+            v-if="getDay(event.date) > 1"
+          >{{ getDay(event.date)}} days</td>
           <td
-            v-else-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) == 1"
+            v-else-if="getDay(event.date) == 1"
           >1 day</td>
           <td
-            v-else-if="Math.ceil((+new Date(event.date) - today) / (24 * 60 * 60 * 1000)) == 0"
+            v-else-if="getDay(event.date) == 0"
           >today</td>
           <td v-else>Released</td>
-          <td><button class="waves-effect waves-teal btn-flat"><i class="material-icons">delete</i></button></td>
+          <td>
+            <button 
+            @click="deleteEvent(event.id)"
+            class="waves-effect waves-teal btn-flat">
+              <i class="material-icons">delete</i>
+            </button>
+          </td>
         </tr>
-        
       </tbody>
     </table>
     <p v-else>no events have been added</p>
 
     <div class="fixed-action-btn direction-top" id="add_btn">
-     
-     <router-link 
-      tag="a"
-      to="/create"
-      class="btn-floating waves-effect waves-light btn-large red"
-     ><i class="material-icons">add</i>
-     </router-link>
-     </div>
+      <router-link tag="a" to="/create" class="btn-floating waves-effect waves-light btn-large red">
+        <i class="material-icons">add</i>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -59,24 +64,52 @@ export default {
   name: "home",
   data: () => ({
     dl: 0,
-    today: +new Date()
+    today: +new Date(),
+    selected: '',
+    options: [
+      {text:'Movie', value: 'Movie'},
+      {text:'Serials', value: 'Serials'},
+      {text:'Games', value: 'Games'},
+      
+    ]
   }),
   mounted() {
-   
+    M.FormSelect.init(this.$refs.select)
   },
   computed: {
     events() {
+      if (this.selected === '') {
       return this.$store.getters.events;
-    }
+      } else if (this.selected === 'Movie'){
+        return this.$store.getters.eventMovie;      
+      } else if (this.selected === 'Serials'){
+        return this.$store.getters.eventSerials;      
+      } else if (this.selected === 'Games'){
+        return this.$store.getters.eventGame;
+      }
+    },
+    
   },
 
-  methods: {}
+  methods: {
+    deleteEvent(id) {
+      this.$store.dispatch("deleteEvent", id).then(() => {
+        this.$store.dispatch('loadEvent')
+      });
+    },
+    getDay(date){
+      return Math.ceil((+new Date(date) - this.today) / (24 * 60 * 60 * 1000))
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-#add_btn{
+#add_btn {
   bottom: 45px;
   right: 24px;
+}
+.input-field{
+  margin-top: 3%;
 }
 </style>

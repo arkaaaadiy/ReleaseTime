@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import home from './views/home.vue'
+import store from './store'
 
 Vue.use(Router)
 
@@ -11,39 +12,45 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: home      
     },
     {
-      path: '/Movie',
-      name: 'Movie',
+      path: '/movie',
+      name: 'movie',
+      // beforeEnter(to, from, next) {
+      //   store.getters.checkUser ? next() : next('/login')
+      // },
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import( /* webpackChunkName: "Movie" */ './views/Movie.vue')
-    },
+      component: () => import( /* webpackChunkName: "movie" */ './views/movie.vue')
+    },    
     {
-      path: '/Games',
-      name: 'Games',
+      path: '/create',
+      name: 'create',
+      // beforeEnter(to, from, next) {
+      //     store.getters.checkUser ? next() : next('/login')
+      // },    
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import( /* webpackChunkName: "Games" */ './views/Games.vue')
+      component: () => import( /* webpackChunkName: "create" */ './views/create.vue')
     },
     {
-      path: '/Serials',
-      name: 'Serials',
+      path: '/registration',
+      name: 'registration',      
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import( /* webpackChunkName: "Serials" */ './views/Serials.vue')
+      component: () => import( /* webpackChunkName: "registration" */ './views/registration.vue')
     },
     {
-      path: '/Create',
-      name: 'Create',
+      path: '/login',
+      name: 'login',      
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import( /* webpackChunkName: "Serials" */ './views/Create.vue')
+      component: () => import( /* webpackChunkName: "login" */ './views/login.vue')
     },
   ]
 })

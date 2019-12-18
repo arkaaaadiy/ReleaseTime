@@ -2,9 +2,9 @@
   <div>    
     <nav class="deep-purple darken-4">
     <div class="nav-wrapper">
-      <router-link to="/" class="brand-logo">Logo</router-link>
+      <router-link to="/" class="brand-logo">ReleaseTime</router-link>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
+      <ul class="right hide-on-med-and-down">        
         <router-link 
         tag="li"
         to="/"
@@ -13,83 +13,108 @@
         >
         <a href="#">Home</a>
         </router-link> 
+
         <router-link 
         tag="li"
         to="/create"
-        exact
+        exact        
         active-class="active"
         >
         <a href="#">Create</a>
         </router-link> 
+
         <router-link 
         tag="li"
-        to="/Movie"
+        to="/movie"
         exact
+        
         active-class="active"
         >
         <a href="#">Movie</a>
-        </router-link>     
+        </router-link> 
+
         <router-link 
         tag="li"
-        to="/Serials"
+        to="/registration"
+        v-if="!checkUser"
+        exact        
+        active-class="active"
+        >
+        <a href="#">Sign Up</a>
+        </router-link>
+
+        <router-link         
+        tag="li"
+        to="/login"
+        v-if="!checkUser"        
         exact
         active-class="active"
         >
-        <a href="#">Serials</a>
-        </router-link>     
-        <router-link 
-        tag="li"
-        to="/Games"
-        exact
-        active-class="active"
-        >
-        <a href="#">Games</a>
-        </router-link>     
+        <a href="#">Sign In</a>
+        </router-link>
+
+        <li
+        v-if="checkUser"
+        @click="logout">
+        <a href="#">Logout</a>
+        </li>       
       </ul>
     </div>
   </nav>
-
   <ul class="sidenav" ref="sidenav" id="mobile-demo">
-      <router-link 
+     <router-link 
         tag="li"
         to="/"
         exact
         active-class="active"
         >
         <a href="#" class="sidenav-close">Home</a>
-        </router-link> 
-      <router-link 
+        </router-link>
+
+        <router-link 
         tag="li"
         to="/create"
         exact
+        v-if="checkUser"
         active-class="active"
         >
         <a href="#" class="sidenav-close">Create</a>
-        </router-link> 
+        </router-link>
+
         <router-link 
         tag="li"
-        to="/Movie"
-        exact
+        to="/movie"
+        exact        
         active-class="active"
         >
         <a href="#" class="sidenav-close">Movie</a>
-        </router-link>     
+        </router-link>
+
         <router-link 
         tag="li"
-        to="/Serials"
+        to="/registration"
         exact
+        v-if="!checkUser"
         active-class="active"
         >
-        <a href="#" class="sidenav-close">Serials</a>
-        </router-link>     
+        <a href="#" class="sidenav-close">Sign Up</a>
+        </router-link>
+
         <router-link 
         tag="li"
-        to="/Games"
-        exact
+        to="/login"
+        v-if="!checkUser"
+        exact       
         active-class="active"
         >
-        <a href="#" class="sidenav-close">Games</a>
-        </router-link>  
+        <a href="#" class="sidenav-close">Sign In</a>
+        </router-link>
+
+        <li
+        v-if="checkUser"
+        @click="logout">
+        <a href="#" class="sidenav-close">Logout</a>
+        </li> 
   </ul>
   </div>
 </template>
@@ -98,11 +123,26 @@
 // @ is an alias to /src
 
 export default {
-  name: 'Navbar',  
-  mounted() {
+  name: 'Navbar',    
+  mounted() {    
     M.Sidenav.init(this.$refs.sidenav, {
-      //onOpenEnd: sidenav.close(),
+      // onOpenEnd: sidenav.close(),
+      edge: 'right'
     })
+  },
+  computed: {
+    checkUser() {
+      return this.$store.getters.checkUser
+    },
+    // onOpenEnd(){
+    //   this.$refs.sivenav.close();
+    // }
+  },
+  methods: {
+    logout() {      
+        this.$store.dispatch('logoutUser')
+        this.$router.push('/login')                    
+      }        
   },
 }
 </script>
@@ -115,5 +155,11 @@ export default {
     nav{
       padding: 0;
     }
+  }
+  .sidenav{
+    width: 150px;
+  }
+  .sidenav-trigger{
+    float: right;
   }
 </style>

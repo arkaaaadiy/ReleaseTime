@@ -86,9 +86,9 @@ export default {
         date: this.date.date,
         category: this.category
       };
-      
+      console.log(event)
       this.$store.dispatch("createEvent", event);
-      this.$router.push('/')
+      this.$router.push('/movie')
     }
   },
   destroyed() {
@@ -103,5 +103,8 @@ export default {
   i{
     position: absolute;
     padding-left: 5px;
+  }
+  .btn{
+    margin-bottom: 100px;
   }
 </style>

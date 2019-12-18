@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>Upcoming events</h3>
+    <h3>Upcoming release</h3>
 
     <hr />
 
-    <table v-if="events.length" >
+    <!-- <table v-if="events.length" >
       <thead>
         <tr>
           <th>Title</th>
@@ -37,7 +37,7 @@
         </tr>
       </tbody>
     </table>
-    <p v-else>no events have been added</p>
+    <p v-else>no events have been added</p> -->
 
     <div class="fixed-action-btn direction-top" id="add_btn">
      
@@ -64,9 +64,7 @@ export default {
    
   },
   computed: {
-    events() {
-      return this.$store.getters.events;
-    }
+    
   },
 
   methods: {}
