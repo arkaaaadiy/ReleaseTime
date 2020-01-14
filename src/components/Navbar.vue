@@ -26,8 +26,7 @@
         <router-link 
         tag="li"
         to="/movie"
-        exact
-        
+        exact        
         active-class="active"
         >
         <a href="#">Movie</a>
@@ -68,18 +67,16 @@
         exact
         active-class="active"
         >
-        <a href="#" class="sidenav-close">Home</a>
-        </router-link>
+        <a href="#" class="sidenav-close">Home</a></router-link>
 
         <router-link 
         tag="li"
         to="/create"
-        exact
+        exact        
         v-if="checkUser"
         active-class="active"
         >
-        <a href="#" class="sidenav-close">Create</a>
-        </router-link>
+        <a href="/create" class="sidenav-close">Create</a></router-link>
 
         <router-link 
         tag="li"
@@ -87,8 +84,7 @@
         exact        
         active-class="active"
         >
-        <a href="#" class="sidenav-close">Movie</a>
-        </router-link>
+        <a href="#" class="sidenav-close">Movie</a></router-link>
 
         <router-link 
         tag="li"
@@ -97,8 +93,7 @@
         v-if="!checkUser"
         active-class="active"
         >
-        <a href="#" class="sidenav-close">Sign Up</a>
-        </router-link>
+        <a href="#" class="sidenav-close">Sign Up</a></router-link>
 
         <router-link 
         tag="li"
@@ -107,14 +102,12 @@
         exact       
         active-class="active"
         >
-        <a href="#" class="sidenav-close">Sign In</a>
-        </router-link>
+        <a href="#" class="sidenav-close">Sign In</a></router-link>
 
         <li
         v-if="checkUser"
         @click="logout">
-        <a href="#" class="sidenav-close">Logout</a>
-        </li> 
+        <a href="#" class="sidenav-close">Logout</a></li> 
   </ul>
   </div>
 </template>
@@ -130,24 +123,25 @@ export default {
       edge: 'right'
     })
   },
-  computed: {
-    checkUser() {
-      return this.$store.getters.checkUser
-    },
+  computed: {  
     // onOpenEnd(){
     //   this.$refs.sivenav.close();
     // }
   },
   methods: {
-    logout() {      
-        this.$store.dispatch('logoutUser')
+    async logout() {      
+        await this.$store.dispatch('logoutUser')
         this.$router.push('/login')                    
-      }        
+    },
+    async checkUser() {
+      return await this.$store.getters.checkUser
+    }
+           
   },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
   nav {
     padding: 0 2rem;
   }
@@ -155,7 +149,8 @@ export default {
     nav{
       padding: 0;
     }
-  }
+  } 
+    
   .sidenav{
     width: 150px;
   }

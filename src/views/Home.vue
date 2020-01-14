@@ -71,7 +71,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 #add_btn{
   bottom: 45px;
   right: 24px;

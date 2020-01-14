@@ -71,12 +71,7 @@ export default {
           password: this.password
         }
         this.$store.dispatch('loginUser', user)
-          .then(()=> {            
-            let message = {
-              context: 'success',
-              title: 'You are Login!'
-            }
-            // this.$store.dispath('getMessage', message)
+          .then(()=> { 
             this.$router.push('/')
           })
           .catch(err => {
@@ -93,8 +88,10 @@ export default {
 };
 </script>
 
-<style lang="sass">
-  .form-registr
-    margin-top: 50px
+<style lang="css">
+  .form-registr{
+    margin-top: 50px;
+  }
+    
 </style>
 

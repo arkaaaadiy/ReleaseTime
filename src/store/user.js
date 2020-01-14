@@ -12,7 +12,7 @@ export default{
         }
     },
     actions: {
-        async registerUser ({commit}, {email,password}){
+        async registerUser ({commit}, {email, password}){
             commit('clearError')
             commit('setLoading', true)
             try{

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from './views/home.vue'
-import store from './store'
 
 Vue.use(Router)
 
@@ -17,9 +16,7 @@ export default new Router({
     {
       path: '/movie',
       name: 'movie',
-      // beforeEnter(to, from, next) {
-      //   store.getters.checkUser ? next() : next('/login')
-      // },
+      
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -28,9 +25,7 @@ export default new Router({
     {
       path: '/create',
       name: 'create',
-      // beforeEnter(to, from, next) {
-      //     store.getters.checkUser ? next() : next('/login')
-      // },    
+      
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -38,7 +33,8 @@ export default new Router({
     },
     {
       path: '/registration',
-      name: 'registration',      
+      name: 'registration', 
+      
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.

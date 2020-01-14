@@ -48,12 +48,7 @@
       </tbody>
     </table>
     <p v-else>no events have been added</p>
-
-    <div class="fixed-action-btn direction-top" id="add_btn">
-      <router-link tag="a" to="/create" class="btn-floating waves-effect waves-light btn-large red">
-        <i class="material-icons">add</i>
-      </router-link>
-    </div>
+    
   </div>
 </template>
 
@@ -77,16 +72,15 @@ export default {
     M.FormSelect.init(this.$refs.select)
   },
   computed: {
-    events() {
-      if (this.selected === '') {
-      return this.$store.getters.events;
-      } else if (this.selected === 'Movie'){
-        return this.$store.getters.eventMovie;      
-      } else if (this.selected === 'Serials'){
-        return this.$store.getters.eventSerials;      
-      } else if (this.selected === 'Games'){
-        return this.$store.getters.eventGame;
-      }
+    events() { 
+      if (this.selected === 'Movie') {
+        return this.$store.getters.eventMovie
+      } else if (this.selected === 'Serials') {
+        return this.$store.getters.eventSerials
+      }  else if (this.selected === 'Games') {
+        return this.$store.getters.eventGames
+      } else
+      return this.$store.getters.events      
     },
     
   },
@@ -99,12 +93,12 @@ export default {
     },
     getDay(date){
       return Math.ceil((+new Date(date) - this.today) / (24 * 60 * 60 * 1000))
-    }
+    },    
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 #add_btn {
   bottom: 45px;
   right: 24px;

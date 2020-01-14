@@ -104,8 +104,10 @@ export default {
 };
 </script>
 
-<style lang="sass">
-  .form-registr
-    margin-top: 50px
+<style lang="css">
+  .form-registr{
+    margin-top: 50px;
+  }
+    
 </style>
 

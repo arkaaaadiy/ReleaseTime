@@ -99,7 +99,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
   i{
     position: absolute;
     padding-left: 5px;
