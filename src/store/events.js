@@ -12,7 +12,10 @@ export default({
     },    
     createEvent(state, payload) {
       state.events.push(payload)    
-    },    
+    },
+    clearEvents(state){
+      state.event = []
+    }    
   },
   actions: {
     async createEvent({commit, getters}, payload){
@@ -26,15 +29,13 @@ export default({
           payload.description,
           payload.complited,
           getters.user.id
-        )
-         console.log(newEvent)
-        const event = await firebase.database().ref('events').push(newEvent)
+        )         
+        const event = await firebase.database().ref('events').child(`${newEvent.user}`).push(newEvent)
 
         commit('createEvent',{
           ...newEvent,
           id: event.key
-        })
-          console.log(event)
+        })          
         commit('setLoading', false)
       } catch (error) {
         commit('setLoading', false)
@@ -43,16 +44,15 @@ export default({
       }
     },
 
-    async loadEvent ({commit}) {
+    async loadEvent ({commit}, payload) {
       commit('clearError')
       commit('setLoading', true)
       try {
-        const event = await firebase.database().ref('events').once('value')
-
+        const event = await firebase.database().ref('events').child(`${payload}`).once('value')        
         const events = event.val()
 
         const eventsArray = []
-
+        events ? 
         Object.keys(events).forEach(key => {
           const e = events[key]
           eventsArray.push(
@@ -67,6 +67,7 @@ export default({
             )
           )
         })
+        : ''
 
         commit('loadEvents', eventsArray)
 
@@ -78,11 +79,11 @@ export default({
       }
     },
 
-    async deleteEvent({commit}, id){
+    async deleteEvent({commit},[user, id]){         
       commit('clearError')
       commit('setLoading', true)
-      try {
-        await firebase.database().ref('events').child(id).remove()
+      try {        
+        await firebase.database().ref('events').child(user).child(id).remove()
         commit('setLoading', false)
       } catch (error) {
         commit('setLoading', false)
@@ -107,7 +108,7 @@ export default({
         return event.category === 'Serials'
       })
     },
-    eventGame(state, getters) {
+    eventGames(state, getters) {
       return getters.events.filter(event => {
         return event.category === 'Games'
       })

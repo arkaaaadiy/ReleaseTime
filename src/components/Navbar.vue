@@ -81,6 +81,7 @@
         <router-link 
         tag="li"
         to="/movie"
+        v-if="checkUser"
         exact        
         active-class="active"
         >
@@ -116,27 +117,29 @@
 // @ is an alias to /src
 
 export default {
-  name: 'Navbar',    
+  name: 'Navbar',
+  data: () => ({
+    
+  }),
+
   mounted() {    
     M.Sidenav.init(this.$refs.sidenav, {
       // onOpenEnd: sidenav.close(),
       edge: 'right'
-    })
+    });             
+       
   },
   computed: {  
-    // onOpenEnd(){
-    //   this.$refs.sivenav.close();
-    // }
+      checkUser(){
+        return this.$store.getters.checkUser
+      }
   },
   methods: {
     async logout() {      
         await this.$store.dispatch('logoutUser')
         this.$router.push('/login')                    
-    },
-    async checkUser() {
-      return await this.$store.getters.checkUser
-    }
-           
+    },  
+          
   },
 }
 </script>

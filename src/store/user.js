@@ -39,11 +39,11 @@ export default{
             }
         },
         loggedUser({commit}, payload) {
-            commit('setUser', new User(payload.uid))            
+            commit('setUser', new User(payload))            
         },
-        logoutUser ({commit}){
-            firebase.auth().signOut()
-            commit('setUser', null)
+        async logoutUser ({commit}){
+            await firebase.auth().signOut()
+            commit('setUser', null)            
         }
 
     },
@@ -51,8 +51,9 @@ export default{
         user (state) {
             return state.user
         },
-        checkUser (state) {
+        checkUser (state) {            
             return state.user !== null
+            
         }
     }
 }

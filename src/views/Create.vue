@@ -85,8 +85,7 @@ export default {
         status: "active",
         date: this.date.date,
         category: this.category
-      };
-      console.log(event)
+      };      
       this.$store.dispatch("createEvent", event);
       this.$router.push('/movie')
     }

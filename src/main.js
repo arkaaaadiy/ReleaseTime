@@ -34,9 +34,9 @@ new Vue({
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.$store.dispatch('loggedUser', user)
+        this.$store.dispatch('loggedUser', user.uid)
 
-        this.$store.dispatch('loadEvent')
+        this.$store.dispatch('loadEvent', user.uid)
       }
     });
   },

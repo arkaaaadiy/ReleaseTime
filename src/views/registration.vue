@@ -28,14 +28,18 @@
           @change="$v.repeatPassword.$touch" 
           v-model="repeatPassword"/>
           <label for="Rpassword">Repeat password</label>
-          <span class="helper-text" v-if="!$v.password.sameAsPassword" data-error="Passwords must be identical."></span>
+          <span class="helper-text" v-if="!$v.repeatPassword.sameAsPassword" data-error="Passwords must be identical."></span>
         </div>
       </div>      
-      <button class="btn" type="submit" name="action">
+      <button 
+      class="btn" 
+      type="submit" 
+      name="action"      
+      v-bind:disabled="disabled">
         <div v-if="loading">Loading...</div>
         <div v-else>Registration</div>
       </button>
-      <p v-if="submitStatus === 'OK'">Thanks for your submission!</p>
+      <p v-if="submitStatus === 'OK'">You are register!!</p>
       <p v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
       <p v-else>{{ submitStatus}}</p>
 
@@ -69,10 +73,10 @@ export default {
     },
     repeatPassword: {
       sameAsPassword: sameAs("password")
-    }
+    },
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
       this.$v.$touch()
       if (this.$v.$invaild){
         this.submitStatus = "ERROR"
@@ -81,13 +85,9 @@ export default {
           email: this.email,
           password: this.password
         }
-        this.$store.dispatch('registerUser', user)
-          .then(()=> {
-            let message = {
-              context: 'success',
-              title: 'You are register!'
-            }
-            this.$store.dispatсh('getMessage', message)
+        await this.$store.dispatch('registerUser', user)
+          .then(()=> {            
+            this.submitStatus = 'OK'
             this.$router.push('/')
           })
           .catch(err => {
@@ -99,6 +99,9 @@ export default {
   computed: {
     loading () {
       return this.$store.getters.loading
+    },
+    disabled (){
+      return this.$v.$invalid
     }
   }
 };

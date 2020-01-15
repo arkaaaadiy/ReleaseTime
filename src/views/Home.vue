@@ -1,8 +1,27 @@
 <template>
   <div>
-    <h3>Upcoming release</h3>
+    <h3 v-if="checkUser">Hello</h3>
 
-    <hr />
+    <router-link 
+        tag="li"
+        to="/create"
+        exact        
+        v-if="checkUser"
+        active-class="active"
+        >
+        <a href="/create" class="sidenav-close">Create</a></router-link>
+
+        <router-link 
+        tag="li"
+        to="/movie"
+        v-if="checkUser"
+        exact        
+        active-class="active"
+        >
+        <a href="#" class="sidenav-close">Movie</a></router-link>
+    <!-- <h3>Upcoming release</h3>
+
+    <hr /> -->
 
     <!-- <table v-if="events.length" >
       <thead>
@@ -64,10 +83,13 @@ export default {
    
   },
   computed: {
-    
+    checkUser() {          
+      return this.$store.getters.checkUser 
+    }
   },
 
-  methods: {}
+  methods: {    
+  }
 };
 </script>
 

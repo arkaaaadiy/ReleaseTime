@@ -39,7 +39,7 @@
           <td v-else>Released</td>
           <td>
             <button 
-            @click="deleteEvent(event.id)"
+            @click="deleteEvent(event.id, event.user)"
             class="waves-effect waves-teal btn-flat">
               <i class="material-icons">delete</i>
             </button>
@@ -47,7 +47,7 @@
         </tr>
       </tbody>
     </table>
-    <p v-else>no events have been added</p>
+    <h3 v-if="events.length === 0">Release event not created</h3>
     
   </div>
 </template>
@@ -56,7 +56,7 @@
 // @ is an alias to /src
 
 export default {
-  name: "home",
+  name: "Release",
   data: () => ({
     dl: 0,
     today: +new Date(),
@@ -86,9 +86,9 @@ export default {
   },
 
   methods: {
-    deleteEvent(id) {
-      this.$store.dispatch("deleteEvent", id).then(() => {
-        this.$store.dispatch('loadEvent')
+    deleteEvent(id, user) {      
+      this.$store.dispatch("deleteEvent", [user, id]).then(() => {
+        this.$store.dispatch('loadEvent', user)
       });
     },
     getDay(date){
